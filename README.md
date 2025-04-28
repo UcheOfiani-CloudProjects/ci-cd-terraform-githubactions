@@ -11,6 +11,44 @@ The project includes:
 - **Terraform** to manage infrastructure as code (IaC).
 - **AWS** as the cloud provider for deploying resources.
 
+### Architectural Diagram
+```mermaid
+graph TD
+    A[GitHub Repository] --> B[GitHub Actions Workflow]
+    B --> C[Set up AWS CLI - Configure AWS credentials]
+    C --> D[Terraform Init]
+    D --> E[Terraform Plan]
+    E --> F[Terraform Apply]
+    F --> G[AWS Infrastructure]
+    G --> H[AWS Lambda, API Gateway, etc.]
+
+    subgraph GitHub
+        A
+        B
+    end
+
+    subgraph AWS
+        G
+        H
+    end
+
+    style GitHub fill:#f9f,stroke:#333,stroke-width:4px
+    style AWS fill:#ccf,stroke:#333,stroke-width:4px
+
+```
+
+## Explanation of the Diagram:
+- **GitHub Repository (A)** -This is where the Terraform configuration files and GitHub Actions workflow file are stored.
+- **GitHub Actions Workflow (B)** -The deploy.yml file in the .github/workflows/ directory triggers the CI/CD pipeline.
+- **Set up AWS CLI (C)** -AWS credentials are configured in GitHub Actions to authenticate the connection with AWS.
+- **Terraform Init (D)** -Initialises the Terraform configuration in the workflow.
+- **Terraform Plan (E)** -Terraform plans the infrastructure changes.
+- **Terraform Apply (F)** -The Terraform apply step is executed to apply the changes to the AWS infrastructure.
+- **AWS Infrastructure (G)** -The resources are provisioned on AWS (such as Lambda functions, API Gateway, etc.).
+- **AWS Lambda, API Gateway, etc. (H): The specific AWS resources deployed as per the Terraform configuration (example: Lambda, API Gateway).
+
+This diagram represents the flow of the CI/CD pipeline, from code push in the GitHub repository to AWS infrastructure deployment.
+
 ### Workflow Overview
 
 The CI/CD workflow is simple and performs the following tasks:
